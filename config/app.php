@@ -1,8 +1,8 @@
 <?php
 
 const APP_URL = "https://farmacia2025-production.up.railway.app/";
-const APP_NAME = "CURSO";
-const APP_SESSION_NAME = "CURSO";
+const APP_NAME = "FARMACIA2025";
+const APP_SESSION_NAME = "FARMACIA2025";
 
 
 /*----------  Zona horaria 

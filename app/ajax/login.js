@@ -1,5 +1,3 @@
-const APP_URL = "https://farmacia2025-production.up.railway.app/";
-
 $("#formLogin").on("submit", function (e) {
   e.preventDefault();
   
@@ -7,7 +5,7 @@ $("#formLogin").on("submit", function (e) {
   formData.append("opcion", "ingresar");
 
   $.ajax({
-    url: APP_URL + "app/controllers/AuthController.php",
+    url:"app/controllers/AuthController.php",
     type: "POST",
     data: formData,
     contentType: false,

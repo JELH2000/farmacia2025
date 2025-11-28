@@ -1,39 +1,30 @@
 <?php
-if (!defined('CONFIG')) {
-    require_once './config.php';
-}
 
-if (isset($_GET['url'])) if ($_GET['url'] == '' || $_GET['url'] == 'index.php') {
-    header('Location: ' . HOMEPAGE);
-    exit();
-}
+require_once "./config/app.php";
+require_once "./autoload.php";
 
-$url = $_GET['url'];
+use app\controllers\viewsController;
 
-$urlExist = in_array($url, ROUTE_DIR_EXIST);
-$estaRestringido = in_array($url, FILE_UNAUTHORIZED);
-
-
-if ($urlExist) {
-    if (!is_dir(__DIR__ . '/' . $url)) header('Content-Type:' . EXTENTION_FILE[pathinfo($url, PATHINFO_EXTENSION)]);
-    if (!$estaRestringido) {
-        if (!is_dir(__DIR__ . '/' . $url)) {
-            if ($url != HOMEPAGE ? autorizeAcces($url) : true) {
-                require_once __DIR__ . '/' . $url;
-                exit();
-            } else {
-                header('Location: ' . 'http://' . HOST_ROOT . '/' . HOMEPAGE);
-                exit();
-            }
-        } else {
-            header('Location: ' . 'http://' . HOST_ROOT . '/' . HOMEPAGE);
-            exit();
-        }
-    } else {
-        header('Location: ' . 'http://' . HOST_ROOT . '/' . 'vistas/error/page403.html');
-        exit();
-    }
+if (isset($_GET['views'])) {
+    $url = explode("/", $_GET['views']);
 } else {
-    header('Location: ' . 'http://' . HOST_ROOT . '/' . 'vistas/error/page404.html');
-    exit();
+    $url = ["login"];
 }
+
+session_start();
+
+$viewsController = new viewsController();
+$vista = $viewsController->obtenerVistasControlador($url[0]);
+
+if (empty($_SESSION['usuario'])) {
+    if ($vista != "app/views/content/404.php") {
+        $vista = "app/views/content/login.php"; //se pone la pagina de inico
+    }
+    require_once $vista;
+} else {
+    if ($vista == "app/views/content/login.php") {
+        $vista = "app/views/content/cerrar.php";
+    }
+    require_once $vista;
+}
+

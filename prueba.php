@@ -19,4 +19,8 @@ echo $_SERVER['SERVER_NAME'] . " :Este es el valor de server name" . "<hr>";
 echo $_SERVER['DOCUMENT_ROOT'] . " :Este el valor de document root." . "<hr>";
 echo HOST_ROOT . " :Este es el valor de la constante." . "<hr>";
 echo __DIR__ . " :Este es el valor de __DIR__" . "<hr>";
-echo "hola mundo";
+echo "Pagina de inicio" . HOMEPAGE . "<hr>";
+echo "las siguientes son las rutas disponibles <hr>";
+foreach (ROUTE_DIR_EXIST as $ruta) {
+    echo $ruta . "<br>";
+}

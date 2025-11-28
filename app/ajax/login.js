@@ -4,7 +4,7 @@ $("#formLogin").on("submit", function (e) {
   formData.append("opcion", "ingresar");
 
   $.ajax({
-    url: "../../controllers/AuthController.php",
+    url: "app/controllers/AuthController.php",
     type: "POST",
     data: formData,
     contentType: false,

@@ -13,8 +13,7 @@ $url = $_GET['url'];
 $urlExist = in_array($url, ROUTE_DIR_EXIST);
 $estaRestringido = in_array($url, FILE_UNAUTHORIZED);
 
-echo "hola mundo ya estoy desesperado: " . "<br>";
-echo "la ruta es: " . $url;
+echo "<script>alert('hola mundo');</script>";
 
 if ($urlExist) {
     if (!is_dir(__DIR__ . '/' . $url)) header('Content-Type:' . EXTENTION_FILE[pathinfo($url, PATHINFO_EXTENSION)]);

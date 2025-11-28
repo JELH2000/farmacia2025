@@ -18,11 +18,22 @@ $("#formLogin").on("submit", function (e) {
       }
     },
     error: function (xhr) {
-      console.error(xhr.responseText);
+      if (xhr.responseText) {
+        try {
+          const errorResponse = JSON.parse(xhr.responseText);
+          console.error("Error del servidor:", errorResponse);
+        } catch (e) {
+          console.error("Respuesta del servidor (texto):", xhr.responseText);
+        }
+      } else {
+        console.error("No hay respuesta del servidor");
+      }
       mostrarError("Error en el servidor. Intente más tarde.");
-    },
+    }
   });
 });
+
+
 
 $("#showPassword").on("click", function () {
   if ($("#contrasenia").attr("type") === "password") {

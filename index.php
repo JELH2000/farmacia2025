@@ -10,7 +10,9 @@ if (isset($_GET['url'])) if ($_GET['url'] == '' || $_GET['url'] == 'index.php') 
 }
 
 $url = $_GET['url'];
-echo $url;
+echo HOMEPAGE . "<HR>";
+echo $url . "<hr>";
+echo "Estas en el index.php";
 /*
 $urlExist = in_array($url, ROUTE_DIR_EXIST);
 $estaRestringido = in_array($url, FILE_UNAUTHORIZED);

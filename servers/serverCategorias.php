@@ -1,5 +1,10 @@
 <?php
-require_once CONTROLADORES . '/CategoriaController.php';
+if (!defined('DIRCONFIG')) {
+    require_once dirname(__DIR__) . '/dirConfig.php';
+}
+if (!defined('CONFIG')) {
+    require_once dirname(__DIR__) . '/config.php';
+}
 
 header('Content-Type: application/json');
 if (isset($_POST['option'])) {

@@ -13,10 +13,10 @@ class conexion
     function __construct(string $host, string $user, string $pass, string $dbname)
     {
         $this->connect = new mysqli(
-            ($host != '' ? $host : SQL_HOST),
-            ($user != '' ? $user : SQL_USER),
-            ($dbname != '' ? $pass : SQL_PASS),
-            ($dbname != '' ? $dbname : SQL_DBNAME)
+            SQL_HOST,
+            SQL_USER,
+            SQL_PASS,
+            SQL_DBNAME
         );
     }
 

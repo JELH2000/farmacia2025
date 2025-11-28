@@ -1,24 +1,14 @@
 <?php
-require_once 'config/database.php';
+// test-auth.php
+header('Content-Type: application/json');
 
-// If the Database class is not defined in 'config/database.php', define it here
-if (!class_exists('Database')) {
-    class Database {
-        private $conn;
+// Simular datos POST
+$_POST = [
+    'opcion' => 'ingresar',
+    'email' => 'test@example.com', // Cambia por un email que exista
+    'password' => 'password123'    // Cambia por la contraseña correcta
+];
 
-        public function getConnection() {
-            $this->conn = new PDO("mysql:host=localhost;dbname=testdb", "root", "");
-            return $this->conn;
-        }
-    }
-}
-
-$database = new Database();
-$db = $database->getConnection();
-
-if ($db) {
-    echo "Conexión exitosa a la BD";
-} else {
-    echo "Error conectando a la BD";
-}
+// Incluir y probar el controlador
+require_once 'app/controllers/AuthController.php';
 ?>

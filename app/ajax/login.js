@@ -1,47 +1,47 @@
 $("#formLogin").on("submit", function (e) {
-    e.preventDefault();
-    var formData = new FormData($("#formLogin")[0]);
-    formData.append("opcion", "ingresar");
+  e.preventDefault();
+  var formData = new FormData($("#formLogin")[0]);
+  formData.append("opcion", "ingresar");
 
-    $.ajax({
-        url: "app/controllers/AuthController.php",
-        type: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        success: function (response) {
-            if (response.status === "success") {
-                location.href = "inicio";
-            } else {
-                mostrarError(response.message);
-            }
-        },
-        error: function (xhr) {
-            console.error(xhr.responseText);
-            mostrarError("Error en el servidor. Intente más tarde.");
-        }
-    });
+  $.ajax({
+    url: "https://farmacia2025-production.up.railway.app/app/controllers/AuthController.php",
+    type: "POST",
+    data: formData,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success: function (response) {
+      if (response.status === "success") {
+        location.href = "inicio";
+      } else {
+        mostrarError(response.message);
+      }
+    },
+    error: function (xhr) {
+      console.error(xhr.responseText);
+      mostrarError("Error en el servidor. Intente más tarde.");
+    },
+  });
 });
 
 $("#showPassword").on("click", function () {
-    if($("#contrasenia").attr("type") === "password"){
-        $("#contrasenia").attr("type", "text");
-        $("#iconPassword").removeClass("ri-eye-fill");
-        $("#iconPassword").addClass("ri-eye-off-fill");
-    } else {
-        $("#contrasenia").attr("type", "password");
-        $("#iconPassword").removeClass("ri-eye-off-fill");
-        $("#iconPassword").addClass("ri-eye-fill");
-    }
+  if ($("#contrasenia").attr("type") === "password") {
+    $("#contrasenia").attr("type", "text");
+    $("#iconPassword").removeClass("ri-eye-fill");
+    $("#iconPassword").addClass("ri-eye-off-fill");
+  } else {
+    $("#contrasenia").attr("type", "password");
+    $("#iconPassword").removeClass("ri-eye-off-fill");
+    $("#iconPassword").addClass("ri-eye-fill");
+  }
 });
 
 function mostrarError(mensaje) {
-    Swal.fire({
-        title: "ERROR",
-        text: mensaje,
-        icon: "error",
-        confirmButtonText: 'Aceptar',
-        allowOutsideClick: false
-    });
+  Swal.fire({
+    title: "ERROR",
+    text: mensaje,
+    icon: "error",
+    confirmButtonText: "Aceptar",
+    allowOutsideClick: false,
+  });
 }

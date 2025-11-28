@@ -4,21 +4,28 @@ header('Pragma: no-cache');
 header('Cache-Control: no-store, no-cache, must-revalidate');
 
 require_once __DIR__ . "/../models/EmpleadoModel.php";
-// require_once __DIR__ . "/../models/EncriptarModel.php"; // Si usas encriptación
 
 class AuthController
 {
-    private EmpleadoModel $empleadoModel;
+    private $empleadoModel;
 
     public function __construct()
     {
         $this->empleadoModel = new EmpleadoModel();
+        $this->initSession();
+    }
+
+    private function initSession(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function ingresar(): array
     {
-        $usuario = isset($_POST["usuario"]) ? trim($_POST["usuario"]) : null;
-        $contrasenia = isset($_POST["contrasenia"]) ? trim($_POST["contrasenia"]) : null;
+        $usuario = isset($_POST["usuario"]) ? trim($_POST["usuario"]) : '';
+        $contrasenia = isset($_POST["contrasenia"]) ? trim($_POST["contrasenia"]) : '';
 
         if (empty($usuario) || empty($contrasenia)) {
             return ["status" => "error", "message" => "Usuario y contraseña son obligatorios"];
@@ -27,15 +34,21 @@ class AuthController
         $empleado = $this->empleadoModel->getEmpleadoLogin($usuario, $contrasenia);
 
         if ($empleado) {
-            session_start();
-            // Guardar en ambas variables de sesión para compatibilidad
-            $_SESSION["empleado"] = $empleado;
-            $_SESSION["usuario"] = $empleado; // Compatibilidad con código existente
+            $_SESSION["empleado"] = [
+                'idEmpleado' => $empleado['idEmpleado'],
+                'Nombre' => $empleado['Nombre'],
+                'Usuario' => $empleado['Usuario'],
+                'Estado' => $empleado['Estado'],
+                'login_time' => time()
+            ];
 
-            // DEBUG: Verificar qué se está guardando
-            error_log("Empleado logueado: " . print_r($empleado, true));
+            session_regenerate_id(true);
 
-            return ["status" => "success", "empleado" => $empleado];
+            return [
+                "status" => "success", 
+                "message" => "Inicio de sesión exitoso",
+                "redirect" => "dashboard.php"
+            ];
         } else {
             return ["status" => "error", "message" => "Usuario o contraseña incorrectos"];
         }
@@ -43,14 +56,17 @@ class AuthController
 
     public function cerrar(): array
     {
-        session_start();
+        $_SESSION = array();
         session_destroy();
-        return ["status" => "success", "message" => "Sesión cerrada exitosamente"];
+        return [
+            "status" => "success", 
+            "message" => "Sesión cerrada exitosamente",
+            "redirect" => "index.php"
+        ];
     }
 
     public function verificarSesion(): array
     {
-        session_start();
         if (isset($_SESSION["empleado"])) {
             return ["status" => "success", "empleado" => $_SESSION["empleado"]];
         } else {
@@ -59,32 +75,32 @@ class AuthController
     }
 }
 
-// Procesar la solicitud
-$authController = new AuthController();
-$opcion = isset($_POST["opcion"]) ? trim($_POST["opcion"]) : null;
-$response = ["status" => "error", "message" => "Opción inválida"];
+// Procesar solicitud
+if ($_POST) {
+    $authController = new AuthController();
+    $opcion = isset($_POST["opcion"]) ? trim($_POST["opcion"]) : '';
+    $response = ["status" => "error", "message" => "Opción inválida"];
 
-try {
-    switch ($opcion) {
-        case "ingresar":
-            $response = $authController->ingresar();
-            break;
-
-        case "cerrar":
-            $response = $authController->cerrar();
-            break;
-
-        case "verificar":
-            $response = $authController->verificarSesion();
-            break;
-
-        default:
-            $response = ["status" => "error", "message" => "Opción no válida"];
-            break;
+    try {
+        switch ($opcion) {
+            case "ingresar":
+                $response = $authController->ingresar();
+                break;
+            case "cerrar":
+                $response = $authController->cerrar();
+                break;
+            case "verificar":
+                $response = $authController->verificarSesion();
+                break;
+            default:
+                $response = ["status" => "error", "message" => "Opción no válida"];
+                break;
+        }
+    } catch (Throwable $e) {
+        error_log("Error en AuthController: " . $e->getMessage());
+        $response = ["status" => "error", "message" => "Error interno del servidor"];
     }
-} catch (Throwable $e) {
-    error_log("Error en AuthController: " . $e->getMessage());
-    $response = ["status" => "error", "message" => "Ocurrió un error en el sistema"];
-}
 
-echo json_encode($response);
+    echo json_encode($response);
+    exit;
+}

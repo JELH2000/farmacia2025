@@ -1,10 +1,5 @@
 <?php
-if (!defined('DIRCONFIG')) {
-    require_once dirname(__DIR__) . '/dirConfig.php';
-}
-if (!defined('CONFIG')) {
-    require_once dirname(__DIR__) . '/config.php';
-}
+if (!defined('CONFIG')) require_once dirname(__DIR__) . '/config.php';
 
 class conexion
 {
@@ -13,10 +8,10 @@ class conexion
     function __construct(string $host, string $user, string $pass, string $dbname)
     {
         $this->connect = new mysqli(
-            SQL_HOST,
-            SQL_USER,
-            SQL_PASS,
-            SQL_DBNAME
+            ($host != '' ? $host : SQL_HOST),
+            ($user != '' ? $user : SQL_USER),
+            ($dbname != '' ? $pass : SQL_PASS),
+            ($dbname != '' ? $dbname : SQL_DBNAME)
         );
     }
 

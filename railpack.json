@@ -1,0 +1,3 @@
+{
+  "startCommand": "serve -s .htdocs"
+}

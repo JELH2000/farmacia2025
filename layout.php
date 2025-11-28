@@ -1,11 +1,5 @@
 <?php
 // vistas/layout.php
-if (!defined('DIRCONFIG')) {
-    require_once dirname(__DIR__) . '/dirConfig.php';
-}
-if (!defined('CONFIG')) {
-    require_once dirname(__DIR__) . '/config.php';
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -43,7 +37,7 @@ if (!defined('CONFIG')) {
     <?php
     $navbar_path = VISTAS . '/navbar.php';
     if (file_exists($navbar_path)) {
-        require_once $navbar_path;
+        include $navbar_path;
     } else {
         // Navbar simple de emergencia
         echo '

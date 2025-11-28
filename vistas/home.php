@@ -1,4 +1,7 @@
 <?php
+if (!defined('DIRCONFIG')) {
+    require_once dirname(__DIR__) . '/dirConfig.php';
+}
 // vistas/home.php
 ob_start();
 ?>
@@ -41,27 +44,27 @@ ob_start();
             </div>
             <div class="card-body">
                 <div class="row g-2">
-                    <?php 
+                    <?php
                     $acciones_rapidas = ['proveedores', 'importes', 'productos', 'ventas'];
-                    foreach ($acciones_rapidas as $accion): 
+                    foreach ($acciones_rapidas as $accion):
                         if (isset(MODULOS[$accion])):
                     ?>
-                    <div class="col-md-6">
-                        <a href="<?php echo generateUrl(MODULOS[$accion]['archivo'] . '?action=crear'); ?>" 
-                           class="btn btn-outline-primary w-100 text-start">
-                            <i class="bi <?php echo MODULOS[$accion]['icono']; ?> me-2"></i>
-                            Nuevo <?php echo rtrim(MODULOS[$accion]['nombre'], 's'); ?>
-                        </a>
-                    </div>
-                    <?php 
+                            <div class="col-md-6">
+                                <a href="<?php echo generateUrl(MODULOS[$accion]['archivo'] . '?action=crear'); ?>"
+                                    class="btn btn-outline-primary w-100 text-start">
+                                    <i class="bi <?php echo MODULOS[$accion]['icono']; ?> me-2"></i>
+                                    Nuevo <?php echo rtrim(MODULOS[$accion]['nombre'], 's'); ?>
+                                </a>
+                            </div>
+                    <?php
                         endif;
-                    endforeach; 
+                    endforeach;
                     ?>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">

@@ -1,0 +1,251 @@
+<div class="row">
+  <div class="col-md-12 mt-3">
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Lista de productos</h4>
+          <div>
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="btn btn-success btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#crearEditarModal"
+            >
+              Nuevo Producto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mt-3">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <input type="hidden" name="action" value="buscar" />
+          <div class="col-md-8">
+            <label for="buscar" class="form-label">Buscar Productos:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="buscar"
+              name="buscar"
+              placeholder="Buscar por nombre, descripcion..."
+              value=""
+            />
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" id="btnBuscar">Buscar</button>
+            <a href="?" class="btn btn-secondary">Limpiar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mt-3">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripcion</th>
+                <th>Foto</th>
+                <th>Categoria</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="bodyTable">
+              <tr>
+                <td>1</td>
+                <td>Papaya</td>
+                <td>1.25</td>
+                <td>Una papaya muy rara que me encontre.</td>
+                <td class="text-center">
+                  <h3
+                    class="bi bi-file-image-fill"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalImgProduct"
+                  ></h3>
+                </td>
+                <td>consomate</td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-warning btn-sm btn-action"
+                      >Editar</a
+                    >
+                    <form method="POST" action="#" style="display: inline">
+                      <button
+                        type="submit"
+                        class="btn btn-danger btn-sm btn-action"
+                        onclick="return confirm('¿Está seguro de eliminar este importe?')"
+                      >
+                        Eliminar
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="crearEditarModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  data-bs-backdrop="static"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-md-12">
+          <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Lista de productos-Crear</h4>
+                <div>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="modalBtnCerrar"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form action="#" id="formProducto">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-center">
+                <div class="col-md-6 m-1">
+                  <label for="Nombre" class="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    name="Nombre"
+                    class="form-control"
+                    id="TIPNombre"
+                    placeholder="Nombre del producto."
+                  />
+                </div>
+                <div class="col-md-6 m-1">
+                  <label for="Precio" class="form-label">Precio</label>
+                  <input
+                    type="number"
+                    name="Precio"
+                    class="form-control"
+                    id="NIPPrecio"
+                    placeholder="Precio del producto."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-center">
+                <div class="col-md-6 m-1">
+                  <label for="Descripcion" class="form-label"
+                    >Descripcion</label
+                  >
+                  <textarea
+                    name="Descripcion"
+                    id="TAPDescripcion"
+                    class="form-control"
+                  ></textarea>
+                </div>
+                <div class="col-md-6 m-1">
+                  <label for="Foto" class="form-label">Foto</label>
+                  <input
+                    type="file"
+                    name="Foto"
+                    class="form-control"
+                    accept="image/jpeg"
+                    id="IIPFoto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 m-1">
+              <label for="Categoria" class="form-label">Categoria</label>
+              <select name="Categoria" id="LPCategoria" class="form-control">
+                <option value="0">Seleccionar Opcion</option>
+                <option value="1">Repira</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="modalBtnCancelar"
+        >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" id="modalBtnGuardar">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalImgProduct">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Imagen de Producto</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <div class="card" style="width: 18rem">
+          <img
+            src="../recursos/multimedia/no-image.jpg"
+            class="card-img-top"
+            alt="..."
+            id="imgContent"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./productoAction/scripts/productoScript.js"></script>

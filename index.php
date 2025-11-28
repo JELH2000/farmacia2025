@@ -10,7 +10,8 @@ if (isset($_GET['url'])) if ($_GET['url'] == '' || $_GET['url'] == 'index.php') 
 }
 
 $url = $_GET['url'];
-echo HOMEPAGE . "<HR>";
+echo HOMEPAGE . "<hr>";
+echo "esta llegando la variable url: " . (isset($_GET['url']) ? "si" : "no") . "<hr>";
 echo $url . "<hr>";
 echo "Estas en el index.php";
 /*

@@ -1,70 +1,90 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
+header('Pragma: no-cache');
+header('Cache-Control: no-store, no-cache, must-revalidate');
 
-// Incluir la conexión a la base de datos
-require_once '../config/database.php';
+require_once __DIR__ . "/../models/EmpleadoModel.php";
+// require_once __DIR__ . "/../models/EncriptarModel.php"; // Si usas encriptación
+
+class AuthController
+{
+    private EmpleadoModel $empleadoModel;
+
+    public function __construct()
+    {
+        $this->empleadoModel = new EmpleadoModel();
+    }
+
+    public function ingresar(): array
+    {
+        $usuario = isset($_POST["usuario"]) ? trim($_POST["usuario"]) : null;
+        $contrasenia = isset($_POST["contrasenia"]) ? trim($_POST["contrasenia"]) : null;
+
+        if (empty($usuario) || empty($contrasenia)) {
+            return ["status" => "error", "message" => "Usuario y contraseña son obligatorios"];
+        }
+
+        $empleado = $this->empleadoModel->getEmpleadoLogin($usuario, $contrasenia);
+
+        if ($empleado) {
+            session_start();
+            // Guardar en ambas variables de sesión para compatibilidad
+            $_SESSION["empleado"] = $empleado;
+            $_SESSION["usuario"] = $empleado; // Compatibilidad con código existente
+
+            // DEBUG: Verificar qué se está guardando
+            error_log("Empleado logueado: " . print_r($empleado, true));
+
+            return ["status" => "success", "empleado" => $empleado];
+        } else {
+            return ["status" => "error", "message" => "Usuario o contraseña incorrectos"];
+        }
+    }
+
+    public function cerrar(): array
+    {
+        session_start();
+        session_destroy();
+        return ["status" => "success", "message" => "Sesión cerrada exitosamente"];
+    }
+
+    public function verificarSesion(): array
+    {
+        session_start();
+        if (isset($_SESSION["empleado"])) {
+            return ["status" => "success", "empleado" => $_SESSION["empleado"]];
+        } else {
+            return ["status" => "error", "message" => "No hay sesión activa"];
+        }
+    }
+}
+
+// Procesar la solicitud
+$authController = new AuthController();
+$opcion = isset($_POST["opcion"]) ? trim($_POST["opcion"]) : null;
+$response = ["status" => "error", "message" => "Opción inválida"];
 
 try {
-    // Verificar método POST
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Método no permitido');
-    }
+    switch ($opcion) {
+        case "ingresar":
+            $response = $authController->ingresar();
+            break;
 
-    $opcion = $_POST['opcion'] ?? '';
-    
-    if ($opcion === 'ingresar') {
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
-        
-        // Validaciones básicas
-        if (empty($email) || empty($password)) {
-            throw new Exception('Email y contraseña son requeridos');
-        }
-        
-        $database = new Database();
-        $db = $database->getConnection();
-        
-        if ($db === null) {
-            throw new Exception('Error de conexión a la base de datos');
-        }
-        
-        // Consulta para verificar usuario
-        $query = "SELECT id, nombre, email, password FROM usuarios WHERE email = :email";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        
-        if ($stmt->rowCount() == 1) {
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Verificar contraseña (asumiendo que está hasheada)
-            if (password_verify($password, $row['password'])) {
-                // Iniciar sesión
-                session_start();
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user_name'] = $row['nombre'];
-                $_SESSION['user_email'] = $row['email'];
-                
-                echo json_encode([
-                    'status' => 'success',
-                    'message' => 'Login exitoso'
-                ]);
-            } else {
-                throw new Exception('Credenciales incorrectas');
-            }
-        } else {
-            throw new Exception('Usuario no encontrado');
-        }
-        
-    } else {
-        throw new Exception('Opción no válida');
+        case "cerrar":
+            $response = $authController->cerrar();
+            break;
+
+        case "verificar":
+            $response = $authController->verificarSesion();
+            break;
+
+        default:
+            $response = ["status" => "error", "message" => "Opción no válida"];
+            break;
     }
-    
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode([
-        'status' => 'error',
-        'message' => $e->getMessage()
-    ]);
+} catch (Throwable $e) {
+    error_log("Error en AuthController: " . $e->getMessage());
+    $response = ["status" => "error", "message" => "Ocurrió un error en el sistema"];
 }
-?>
+
+echo json_encode($response);

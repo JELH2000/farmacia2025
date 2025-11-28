@@ -21,6 +21,10 @@ echo HOST_ROOT . " :Este es el valor de la constante." . "<hr>";
 echo __DIR__ . " :Este es el valor de __DIR__" . "<hr>";
 echo "Pagina de inicio" . HOMEPAGE . "<hr>";
 echo "las siguientes son las rutas disponibles <hr>";
+echo "host_sql: " . SQL_HOST . "<hr>";
+echo "usuario_sql: " . SQL_USER . "<hr>";
+echo "Password_sql: " . SQL_PASS . "<hr>";
+echo "dbname_sql" . SQL_DBNAME . "<hr>";
 foreach (ROUTE_DIR_EXIST as $ruta) {
     echo $ruta . "<br>";
 }

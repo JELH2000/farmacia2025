@@ -84,6 +84,11 @@ if (!defined('EXTENTION_FILE')) {
 }
 
 if (!defined('HOST_ROOT')) {
+    define('HOST_ROOT',  $_SERVER['SERVER_NAME']);
+}
+
+/*
+if (!defined('HOST_ROOT')) {
 
     if (__DIR__ != $_SERVER['DOCUMENT_ROOT']) {
         define(
@@ -98,7 +103,7 @@ if (!defined('HOST_ROOT')) {
     } else {
         define('HOST_ROOT', $_SERVER['SERVER_NAME']);
     }
-}
+}*/
 
 // Constantes para el menú y navegación
 if (!defined('APP_NAME')) {

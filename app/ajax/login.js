@@ -3,10 +3,6 @@ $("#formLogin").on("submit", function (e) {
   var formData = new FormData($("#formLogin")[0]);
   formData.append("opcion", "ingresar");
 
-  for (var pair of formData.entries()) {
-    console.log(pair[0] + ': ' + pair[1]);
-  }
-
   $.ajax({
     url: "app/controllers/AuthController.php",
     type: "POST",

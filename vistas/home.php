@@ -1,6 +1,6 @@
 <?php
 if (!defined('DIRCONFIG')) {
-    require_once './dirConfig.php';
+    require_once dirname(__DIR__) . '/dirConfig.php';
 }
 if (!defined('CONFIG')) {
     require_once dirname(__DIR__) . '/config.php';

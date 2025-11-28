@@ -5,6 +5,7 @@ if (!defined('DIRCONFIG')) {
 if (!defined('CONFIG')) {
     require_once dirname(__DIR__) . '/config.php';
 }
+require_once CONTROLADORES . "/CategoriaController.php";
 
 header('Content-Type: application/json');
 if (isset($_POST['option'])) {

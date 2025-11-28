@@ -1,36 +1,3 @@
-# 1. Imagen base de PHP
-# Usamos php-fpm (FastCGI Process Manager), que es más eficiente para Nginx.
-FROM php:8.2-fpm-alpine
-
-# 2. Instalar Extensiones
-# Ejecutamos los comandos para instalar y habilitar las extensiones necesarias.
-# apk add: es el administrador de paquetes de Alpine Linux (la base de nuestra imagen)
-# docker-php-ext-install: es un script de ayuda de las imágenes de Docker de PHP
-RUN apk add --no-cache \
-    $PHPIZE_DEPS \
-    libzip-dev \
-    zip \
-    && docker-php-ext-install mysqli pdo pdo_mysql opcache \
-    && docker-php-ext-enable opcache
-
-# 3. Establecer el directorio de trabajo
-# Esta es la carpeta donde Nginx buscará tus archivos.
-WORKDIR /var/www/html
-
-# 4. Copiar los archivos de la aplicación
-# Copia todo el contenido de tu proyecto local al contenedor.
-COPY . /var/www/html
-
-# 5. Cambiar permisos (Importante para evitar errores de escritura/lectura)
-RUN chown -R www-data:www-data /var/www/html
-
-# 6. Exponer el puerto de PHP-FPM
-# Este es el puerto interno que Nginx usará para comunicarse con PHP.
-EXPOSE 9000
-
-# 7. Definir el comando inicial (el proceso principal)
-CMD ["php-fpm"]
-
 # Usamos una imagen que ya incluye PHP-FPM y Nginx
 FROM ghcr.io/railwayapp/nginx-php:8.2
 

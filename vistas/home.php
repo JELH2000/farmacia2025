@@ -1,6 +1,9 @@
 <?php
+if (!defined('DIRCONFIG')) {
+    require_once './dirConfig.php';
+}
 if (!defined('CONFIG')) {
-    require_once './config.php';
+    require_once dirname(__DIR__) . '/config.php';
 }
 // vistas/home.php
 ob_start();

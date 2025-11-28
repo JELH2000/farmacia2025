@@ -1,5 +1,5 @@
 <?php
-//if (!defined('CONFIG')) require_once './config.php';
+if (!defined('CONFIG')) require_once './config.php';
 
 /*echo HOST_ROOT . " :Este es el valor de la constante." . "<hr>";
 echo $_SERVER['SERVER_NAME'] . " :Este es el valor de server name" . "<hr>";

@@ -14,12 +14,6 @@ if (isset($_GET['url'])) {
     exit();
 }
 
-$url = $_GET['url'];
-echo HOMEPAGE . "<hr>";
-echo "esta llegando la variable url: " . (isset($_GET['url']) ? "si" : "no") . "<hr>";
-echo $url . "<hr>";
-echo "Estas en el index.php";
-/*
 $urlExist = in_array($url, ROUTE_DIR_EXIST);
 $estaRestringido = in_array($url, FILE_UNAUTHORIZED);
 
@@ -46,4 +40,3 @@ if ($urlExist) {
     header('Location: ' . 'http://' . HOST_ROOT . '/' . 'vistas/error/page404.html');
     exit();
 }
-*/

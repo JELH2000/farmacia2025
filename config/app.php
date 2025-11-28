@@ -1,14 +1,14 @@
 <?php
 
-	const APP_URL="http://localhost/CURSO/";
-	const APP_NAME="CURSO";
-	const APP_SESSION_NAME="CURSO";
+const APP_URL = "https://hopper.proxy.rlwy.net:54056/";
+const APP_NAME = "CURSO";
+const APP_SESSION_NAME = "CURSO";
 
 
-	/*----------  Zona horaria 
+/*----------  Zona horaria 
 	const APP_URL="http://localhost/CURSO/";
 	 ----------*/
-	date_default_timezone_set("America/El_Salvador");//no vorarr aon las pruevas de localhst y del dominio se cambiara previamente
+date_default_timezone_set("America/El_Salvador");//no vorarr aon las pruevas de localhst y del dominio se cambiara previamente
 	//dejar contancia compalleros
 	/*
 	const DB_SERVER="sql100.infinityfree.com";

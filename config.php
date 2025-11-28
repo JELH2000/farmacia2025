@@ -84,7 +84,7 @@ if (!defined('EXTENTION_FILE')) {
 }
 
 if (!defined('HOST_ROOT')) {
-    define('HOST_ROOT',  $_SERVER['SERVER_NAME']);
+    define('HOST_ROOT',  "https://farmacia2025-production.up.railway.app");
 }
 
 /*

@@ -13,7 +13,7 @@ $("#formLogin").on("submit", function (e) {
     dataType: "json",
     success: function (response) {
       if (response.status === "success") {
-        location.href = APP_URL + "inicio";
+        location.href = "inicio";
       } else {
         mostrarError(response.message);
       }

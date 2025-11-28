@@ -99,5 +99,5 @@ ob_start();
 <?php
 $content = ob_get_clean();
 $page_title = "Inicio";
-require_once dirname(__DIR__) . 'layout.php';
+require_once dirname(__DIR__) . '/layout.php';
 ?>

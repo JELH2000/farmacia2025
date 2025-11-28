@@ -4,7 +4,7 @@ if (!defined('DIRCONFIG')) {
 }
 
 if (!defined('SQL_HOST')) {
-    define('SQL_HOST', 'hopper.proxy.rlwy.net:54056');
+    define('SQL_HOST', 'mysql.railway.internal:3306');
 }
 
 if (!defined('SQL_USER')) {

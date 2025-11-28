@@ -15,4 +15,7 @@ $tremano = str_replace( //puedo obtener la otra parte de mi host raiz de la vari
 echo mb_strlen($tremano) . "<hr>";
 echo (__DIR__ != $_SERVER['DOCUMENT_ROOT']) . " :resultado";
 */
+echo $_SERVER['SERVER_NAME'] . " :Este es el valor de server name" . "<hr>";
+echo $_SERVER['DOCUMENT_ROOT'] . " :Este el valor de document root." . "<hr>";
+echo HOST_ROOT . " :Este es el valor de la constante." . "<hr>";
 echo "hola mundo";

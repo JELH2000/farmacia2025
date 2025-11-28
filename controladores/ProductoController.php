@@ -1,5 +1,10 @@
 <?php
-if (!defined('CONFIG')) require_once dirname(__DIR__) . '/config.php';
+if (!defined('DIRCONFIG')) {
+    require_once dirname(__DIR__) . '/dirConfig.php';
+}
+if (!defined('CONFIG')) {
+    require_once dirname(__DIR__) . '/config.php';
+}
 
 require_once MODELOS . '/producto.php';
 

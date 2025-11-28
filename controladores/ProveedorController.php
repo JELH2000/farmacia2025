@@ -1,5 +1,10 @@
 <?php
-require_once MODELOS . '/ProveedorModel.php';
+if (!defined('DIRCONFIG')) {
+    require_once dirname(__DIR__) . '/dirConfig.php';
+}
+if (!defined('CONFIG')) {
+    require_once dirname(__DIR__) . '/config.php';
+}
 
 class ProveedorController
 {
@@ -80,7 +85,7 @@ class ProveedorController
             }
         }
 
-        
+
         switch ($action) {
             case 'editar':
                 if (isset($_GET['id'])) {
@@ -162,15 +167,14 @@ class ProveedorController
                     </div>
                 </div>
 
-                
+
                 <?php if (!empty($mensaje)): ?>
                     <div class="alert alert-<?php echo $tipoMensaje; ?> alert-dismissible fade show" role="alert">
                         <?php echo $mensaje; ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    
+
                     <script>
-                        
                         setTimeout(function() {
                             const alert = document.querySelector('.alert');
                             if (alert) {
@@ -238,8 +242,8 @@ class ProveedorController
                                     <div class="mb-3">
                                         <label for="direccion" class="form-label">Dirección:</label>
                                         <textarea class="form-control" id="direccion" name="direccion" rows="3"><?php
-                                            echo isset($proveedor) ? htmlspecialchars($proveedor['Direccion']) : '';
-                                        ?></textarea>
+                                                                                                                echo isset($proveedor) ? htmlspecialchars($proveedor['Direccion']) : '';
+                                                                                                                ?></textarea>
                                     </div>
 
                                     <div class="d-flex gap-2">
@@ -283,7 +287,7 @@ class ProveedorController
                                                                 class="btn btn-warning btn-sm btn-action">Editar</a>
                                                             <form method="POST" action="?action=eliminar" style="display: inline;">
                                                                 <input type="hidden" name="id" value="<?php echo $prov['idProveedor']; ?>">
-                                                                <button type="submit" class="btn btn-danger btn-sm btn-action" 
+                                                                <button type="submit" class="btn btn-danger btn-sm btn-action"
                                                                     onclick="return confirm('¿Está seguro de eliminar a <?php echo htmlspecialchars($prov['Nombre']); ?>?')">
                                                                     Eliminar
                                                                 </button>

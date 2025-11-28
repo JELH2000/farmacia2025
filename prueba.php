@@ -18,4 +18,5 @@ echo (__DIR__ != $_SERVER['DOCUMENT_ROOT']) . " :resultado";
 echo $_SERVER['SERVER_NAME'] . " :Este es el valor de server name" . "<hr>";
 echo $_SERVER['DOCUMENT_ROOT'] . " :Este el valor de document root." . "<hr>";
 echo HOST_ROOT . " :Este es el valor de la constante." . "<hr>";
+echo __DIR__ . " :Este es el valor de __DIR__" . "<hr>";
 echo "hola mundo";

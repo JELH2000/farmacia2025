@@ -4,7 +4,12 @@ if (!defined('CONFIG')) {
 }
 
 
-if (isset($_GET['url'])) if ($_GET['url'] == '' || $_GET['url'] == 'index.php') {
+if (isset($_GET['url'])) {
+    if ($_GET['url'] == '' || $_GET['url'] == 'index.php') {
+        header('Location: ' . HOMEPAGE);
+        exit();
+    }
+} else {
     header('Location: ' . HOMEPAGE);
     exit();
 }

@@ -3,6 +3,10 @@ $("#formLogin").on("submit", function (e) {
   var formData = new FormData($("#formLogin")[0]);
   formData.append("opcion", "ingresar");
 
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ': ' + pair[1]);
+  }
+
   $.ajax({
     url: "app/controllers/AuthController.php",
     type: "POST",
@@ -17,18 +21,20 @@ $("#formLogin").on("submit", function (e) {
         mostrarError(response.message);
       }
     },
-    error: function (xhr) {
-      if (xhr.responseText) {
-        try {
-          const errorResponse = JSON.parse(xhr.responseText);
-          console.error("Error del servidor:", errorResponse);
-        } catch (e) {
-          console.error("Respuesta del servidor (texto):", xhr.responseText);
-        }
+    error: function (xhr, status, error) {
+      console.error("=== ERROR AJAX ===");
+      console.error("Status:", status);
+      console.error("Error:", error);
+      console.error("HTTP Status:", xhr.status);
+      console.error("URL:", "app/controllers/AuthController.php");
+      console.error("Respuesta completa:", xhr.responseText);
+      
+      // Verifica si es un error 404 (archivo no encontrado)
+      if (xhr.status === 404) {
+        mostrarError("El servicio de autenticación no está disponible (404)");
       } else {
-        console.error("No hay respuesta del servidor");
+        mostrarError("Error de conexión. Intente más tarde.");
       }
-      mostrarError("Error en el servidor. Intente más tarde.");
     }
   });
 });

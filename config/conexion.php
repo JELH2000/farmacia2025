@@ -1,36 +1,32 @@
 <?php
 
-    require_once 'server.php';
-    class Conexion{
-        private static ?PDO $conexion = null;
+class Database {
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
+    private $port;
+    public $conn;
 
-        private function __construct() {}
-
-        public static function conectar(): ?PDO
-        {
-            if (self::$conexion === null) {
-                $host     = DB_SERVER;
-                $dbname   = DB_NAME;
-                $user     = DB_USER;
-                $password = DB_PASS;
-
-                $dsn = "mysql:host={$host};dbname={$dbname};charset=utf8mb4";
-
-                $opciones = [
-                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Modo de error seguro
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Devuelve arrays asociativos
-                    PDO::ATTR_PERSISTENT         => false,                  // Evita conexiones persistentes
-                    PDO::ATTR_EMULATE_PREPARES   => false,                  // Usa prepared statements nativos
-                ];
-
-                try {
-                    self::$conexion = new PDO($dsn, $user, $password, $opciones);
-                } catch (PDOException $e) {
-                    error_log("Error de conexión a la base de datos: " . $e->getMessage(), 0);
-                    die("Error de conexión. Intente más tarde.");
-                }
-            }
-
-            return self::$conexion;
-        }
+    public function __construct() {
+        $this->host = getenv('DB_SERVER') ?: 'hopper.proxy.rlwy.net';
+        $this->db_name = getenv('DB_NAME') ?: 'farmacia';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASS') ?: 'QZvNxmNRDUqxWxIWQsljnPWRfcHKvIgZ';
+        $this->port = getenv('DB_PORT') ?: '54056';
     }
+
+    public function getConnection() {
+        $this->conn = null;
+        try {
+            $dsn = "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name . ";charset=utf8";
+            $this->conn = new PDO($dsn, $this->username, $this->password);
+            $this->conn->exec("set names utf8");
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $exception) {
+            error_log("Error de conexión: " . $exception->getMessage());
+        }
+        return $this->conn;
+    }
+}
+?>

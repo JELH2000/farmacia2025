@@ -1,10 +1,13 @@
+const APP_URL = "https://farmacia2025-production.up.railway.app/";
+
 $("#formLogin").on("submit", function (e) {
   e.preventDefault();
+  
   var formData = new FormData($("#formLogin")[0]);
   formData.append("opcion", "ingresar");
 
   $.ajax({
-    url: "app/controllers/AuthController.php",
+    url: APP_URL + "app/controllers/AuthController.php",
     type: "POST",
     data: formData,
     contentType: false,
@@ -12,22 +15,23 @@ $("#formLogin").on("submit", function (e) {
     dataType: "json",
     success: function (response) {
       if (response.status === "success") {
-        location.href = "inicio";
+        location.href = APP_URL + "inicio";
       } else {
         mostrarError(response.message);
       }
     },
     error: function (xhr, status, error) {
-      console.error("=== ERROR AJAX ===");
-      console.error("Status:", status);
-      console.error("Error:", error);
-      console.error("HTTP Status:", xhr.status);
-      console.error("URL:", "app/controllers/AuthController.php");
-      console.error("Respuesta completa:", xhr.responseText);
+      console.error("Error completo:", {
+        status: xhr.status,
+        statusText: xhr.statusText,
+        responseText: xhr.responseText,
+        error: error
+      });
       
-      // Verifica si es un error 404 (archivo no encontrado)
       if (xhr.status === 404) {
-        mostrarError("El servicio de autenticación no está disponible (404)");
+        mostrarError("Servicio no encontrado. Verifique la URL.");
+      } else if (xhr.status === 500) {
+        mostrarError("Error interno del servidor.");
       } else {
         mostrarError("Error de conexión. Intente más tarde.");
       }

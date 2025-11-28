@@ -13,14 +13,6 @@ $(document).ready(function () {
         }
     });
 
-    // Validación en tiempo real
-    $('#usuario').on('input', function() {
-        validarCampo($(this), isValidUsuario);
-    });
-
-    $('#contrasenia').on('input', function() {
-        validarCampo($(this), isValidContrasenia);
-    });
 
     // Envío del formulario
     $('#formLogin').on('submit', function(e) {
@@ -29,16 +21,6 @@ $(document).ready(function () {
         const usuario = $('#usuario').val().trim();
         const contrasenia = $('#contrasenia').val();
 
-        // Validaciones frontend
-        if (!isValidUsuario(usuario)) {
-            mostrarError('Por favor, ingrese un usuario válido (3-20 caracteres alfanuméricos)');
-            return;
-        }
-
-        if (!isValidContrasenia(contrasenia)) {
-            mostrarError('La contraseña debe tener entre 5 y 10 caracteres');
-            return;
-        }
 
         // Mostrar loading
         const btnSubmit = $(this).find('button[type="submit"]');
